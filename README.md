@@ -1,5 +1,7 @@
 # Asistent de triaj alerte de securitate
 
+![Teste](https://github.com/VibeStorm/asistent-triaj-alerte/actions/workflows/ci.yml/badge.svg)
+
 Proiect mic cu **Python, Flask, SQLAlchemy și un agent LLM cu tool calling (Groq)**. Pui o întrebare în română
 despre autentificări Windows (de exemplu *„Ce IP-uri au încercat cele mai multe autentificări eșuate în ultimele 24h?"*),
 iar agentul alege singur dintre **3 tool-uri fixe**, interoghează o bază SQLite și răspunde cu un rezumat.
