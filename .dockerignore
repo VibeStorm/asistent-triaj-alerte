@@ -1,0 +1,16 @@
+.venv/
+.git/
+.github/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.db
+.env
+.env.*
+CLAUDE.md
+EXPLICATII.md
+PROMPTURI.md
+.claude/
+PRIVAT/
+tests/
+docs/

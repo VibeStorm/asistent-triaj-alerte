@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asistent de triaj alerte</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main>
+    <h1>Asistent de triaj alerte de securitate</h1>
+    <p class="note">Datele sunt <strong>sintetice</strong> (loguri Windows 4624/4625 inventate).
+      Răspunsurile vin de la un model de limbaj și pot conține greșeli: verifică-le în pașii de mai jos.</p>
+
+    <form method="post" action="{{ url_for('index_post') }}">
+      <label for="question">Întrebarea ta</label>
+      <textarea id="question" name="question" rows="3" maxlength="500" required>{{ question }}</textarea>
+      <label class="check">
+        <input type="checkbox" name="simulated" {% if simulated %}checked{% endif %}>
+        Folosește LLM simulat (fără Groq)
+      </label>
+      <button type="submit">Întreabă</button>
+    </form>
+
+    <section>
+      <h2>Exemple</h2>
+      <div class="examples">
+        {% for ex in examples %}
+          <button type="button" class="example" data-question="{{ ex }}">{{ ex }}</button>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% if error %}
+      <section class="error"><strong>Eroare:</strong> {{ error }}</section>
+    {% endif %}
+
+    {% if result %}
+      <section>
+        <h2>Răspuns</h2>
+        {# autoescape e activ: textul venit de la LLM nu poate injecta HTML #}
+        <div class="answer">{{ result.answer }}</div>
+
+        <h2>Pașii agentului</h2>
+        {% if result.steps %}
+          <ol class="steps">
+            {% for step in result.steps %}
+              <li>
+                <code>{{ step.tool }}</code> <code>{{ step.arguments }}</code>
+                {% if step.result.error %}<span class="bad">eroare: {{ step.result.error }}</span>{% endif %}
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p>Modelul a răspuns fără să apeleze vreun tool.</p>
+        {% endif %}
+      </section>
+    {% endif %}
+  </main>
+
+  <script>
+    document.querySelectorAll(".example").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        document.getElementById("question").value = btn.dataset.question;
+      });
+    });
+  </script>
+</body>
+</html>

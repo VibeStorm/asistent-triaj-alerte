@@ -1,0 +1,23 @@
+# --- mediu Python ---
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# --- baza de date locală (se regenerează) ---
+*.db
+*.sqlite3
+
+# --- PRIVAT: partea B (nu se publică pe GitHub) ---
+CLAUDE.md
+EXPLICATII.md
+PROMPTURI.md
+.claude/
+PRIVAT/
+
+# --- fișiere sensibile, ca plasă de siguranță (cheia Groq stă în .env) ---
+.env
+*.key
+*.pem
+secrets*
+config.json
